@@ -1,11 +1,13 @@
 
 import './App.css';
-import Form from './modules/Form';
+import Dashboard from './pages/Dashboard';
+import Form from './pages/Form';
 
 function App() {
   return (
     <div className='bg-bgcolor h-screen flex justify-center items-center'>
-      <Form/>
+      {/* <Form/> */}
+      <Dashboard/>
     </div>
   );
 }

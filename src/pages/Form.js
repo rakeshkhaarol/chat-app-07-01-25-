@@ -1,12 +1,27 @@
 //import area
-import React from 'react'
+import React, { useState } from 'react'
 
 //definetion area
 function Form(
     {
-        isSignInPage=true,
+        isSignInPage=false,
     }
 ) {
+
+    //hooks area
+const[data ,setdata]=useState({
+    ...(isSignInPage && {
+        username : ''
+    }),
+    email:'',
+    password:''
+})
+
+console.log()
+    ///function definetion area
+
+
+    //return statment
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
@@ -29,6 +44,8 @@ function Form(
                             className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter your name"
                             required
+                            value={data.username}
+                            onChange={(e)=>setdata({...data,username:e.target.value})}
                         />
                     </div>}
                     <div>
@@ -44,6 +61,7 @@ function Form(
                             className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter your email"
                             required
+                            value={data.email}
                         />
                     </div>
 
@@ -61,6 +79,7 @@ function Form(
                             className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter your password"
                             required
+                            value={data.password}
                         />
                     </div>
 
@@ -78,7 +97,7 @@ function Form(
                 {/* Footer */}
                 <div className="text-sm text-center text-gray-500">
                      {isSignInPage?" Don't have an account ?":'Alrady have an account ? '}
-                    <a href="/register" className="text-blue-500 hover:underline">
+                    <a href={isSignInPage ? '/signIn' : '/login'} className="text-blue-500 hover:underline">
                        {isSignInPage?'sign in' : 'login'}
                     </a>
                 </div>

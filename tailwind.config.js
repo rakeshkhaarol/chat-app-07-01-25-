@@ -11,9 +11,11 @@ module.exports = {
         'green': '#13ce66',
         'yellow': '#ffc82c',
         'gray-dark': '#273444',
-        'gray': '#8492a6',
+        'gray': '#d1d5db',
         'gray-light': '#d3dce6',
+        'Slate': '#FFFFFF ',
         "bgcolor": "#99f6e4", // Add your custom color
+        'primary':'#60a5fa',
       },
 
     },
