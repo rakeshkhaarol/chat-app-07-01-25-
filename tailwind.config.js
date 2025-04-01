@@ -16,6 +16,8 @@ module.exports = {
         'Slate': '#FFFFFF ',
         "bgcolor": "#99f6e4", // Add your custom color
         'primary':'#60a5fa',
+        'Teal':'#f0fdfa',
+        pink: '#fbcfe8',
       },
 
     },

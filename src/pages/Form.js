@@ -1,5 +1,6 @@
 //import area
 import React, { useState } from 'react'
+import {  useNavigate } from 'react-router-dom'
 
 //definetion area
 function Form(
@@ -22,6 +23,7 @@ console.log()
 
 
     //return statment
+    const nevigate = useNavigate()
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
@@ -87,7 +89,7 @@ console.log()
                     <div>
                         <button
                             type="submit"
-                             className="w-full px-4 py-2 text-white bg-gray rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                             className="w-full px-4 py-2 text-white bg-blue rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >
                             {isSignInPage ? 'Login' : 'sign in'}
                         </button>
@@ -97,11 +99,12 @@ console.log()
                 {/* Footer */}
                 <div className="text-sm text-center text-gray-500">
                      {isSignInPage?" Don't have an account ?":'Alrady have an account ? '}
-                    <a href={isSignInPage ? '/signIn' : '/login'} className="text-blue-500 hover:underline">
+                     <span className='text-primary cursor-pointer underline' onClick={()=>{nevigate(`/users/${isSignInPage ? 'login ' : 'sign_in'}`)}}>{isSignInPage ? 'login' : 'sign_in'}</span>
+                    {/* <Link onClick={()={nevigate(isSignInPage ? '/users/signIn' : '/users/login')}} to={isSignInPage ? '/users/signIn' : '/users/login'} className="text-blue-500 hover:underline">
                        {isSignInPage?'sign in' : 'login'}
-                    </a>
+                    </Link>  */}
                 </div>
-            </div>
+            </div> 
         </div>
     )                   
 }
