@@ -44,13 +44,13 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } />
-          <Route path={'/users/sign_in'} element={
+          <Route path={'/users/sign_Up'} element={
             <ProtectedRoute>
 
               <Form isSignInPage={true} />
             </ProtectedRoute>
           }></Route>
-          <Route path={'/users/sign_up'} element={
+          <Route path={'/users/sign_in'} element={
             <ProtectedRoute>
 
               <Form isSignInPage={false} />

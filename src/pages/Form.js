@@ -128,7 +128,7 @@ function Form(
                 {/* Footer */}
                 <div className="text-sm text-center text-gray-500">
                     {isSignInPage ? " Don't have an account ?" : 'Alrady have an account ? '}
-                    <span className='text-primary cursor-pointer underline'  onClick={() => navigate(`/users/${isSignInPage ? 'sign_Up' : 'sign_in'}`)}>{isSignInPage ? 'sign_in' : 'sign_up'}</span>
+                    <span className='text-primary cursor-pointer underline'  onClick={() => navigate(`/users/${isSignInPage ? 'sign_in' : 'sign_up'}`)}>{isSignInPage ? 'sign_in' : 'sign_up'}</span>
                     {/* <Link onClick={()={nevigate(isSignInPage ? '/users/signIn' : '/users/sign_Up')}} to={isSignInPage ? '/users/signIn' : '/users/sign_Up'} className="text-blue-500 hover:underline">
                        {isSignInPage?'sign in' : 'sign_Up'}
                     </Link>  */}
