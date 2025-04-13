@@ -6,17 +6,17 @@ import Form from './pages/Form';
 
 
 
-const ProtectedRoute = ({ children }) => {
-  const loggedIn = localStorage.getItem('user:token') !== null || true;
+const ProtectedRoute = ({ children, auth = false }) => {
+  const loggedIn = localStorage.getItem('user:token') !== null || false; //true
 
-  if (!loggedIn) {
+  if (!loggedIn && auth) {
     return <Navigate to="/users/sign_in" />;
-  }
-
-  if (loggedIn && ['/users/sign_in', '/users/login'].includes(window.location.pathname)) {
+  } else if (loggedIn && ['/users/sign_in', '/users/sign_up'].includes(window.location.pathname)) {
     console.log('Redirecting to home');
     return <Navigate to="/" />;
   }
+
+
 
   return children;
 };
@@ -38,19 +38,19 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          
+
           <Route path='/' element={
-            <ProtectedRoute>
+            <ProtectedRoute auth={true}>
               <Dashboard />
             </ProtectedRoute>
-          }/>
-          <Route path={'/users/login'} element={
+          } />
+          <Route path={'/users/sign_in'} element={
             <ProtectedRoute>
 
               <Form isSignInPage={true} />
             </ProtectedRoute>
           }></Route>
-          <Route path={'/users/sign_in'} element={
+          <Route path={'/users/sign_up'} element={
             <ProtectedRoute>
 
               <Form isSignInPage={false} />

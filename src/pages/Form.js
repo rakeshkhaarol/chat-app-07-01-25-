@@ -1,37 +1,63 @@
 //import area
 import React, { useState } from 'react'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 //definetion area
 function Form(
     {
-        isSignInPage=false,
+        isSignInPage = false,
     }
 ) {
 
     //hooks area
-const[data ,setdata]=useState({
-    ...(isSignInPage && {
-        username : ''
-    }),
-    email:'',
-    password:''
-})
+    const [data, setdata] = useState({
+        ...(isSignInPage && {
+            username: ''
+        }),
+        email: '',
+        password: ''
+    })
 
-console.log()
+    console.log()
     ///function definetion area
-
+    const hendalSubmit = async (e) => {
+        e.preventDefault(); // Don't forget to prevent default form submission behavior
+        try {
+            const res = await fetch(`http://localhost:2000/api/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const contentType = res.headers.get("content-type");
+    
+            let resData;
+            if (contentType && contentType.includes("application/json")) {
+                resData = await res.json();
+            } else {
+                resData = await res.text();
+            }
+    
+            console.log('data----', resData);
+    
+        } catch (err) {
+            console.error('Error:', err);
+        }
+    }
+    
 
     //return statment
-    const nevigate = useNavigate()
+    const navigate = useNavigate()
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg" style={{ 'boxShadow': '0 0 10px 2px gray' }}>
                 <h2 className="text-2xl font-bold text-center text-gray-800">
-                    {isSignInPage ? 'Login to Your Account ': 'Create to Your Account'}
-                    
+                    {isSignInPage ? 'sign_Up to Your Account ' : 'Create to Your Account'}
+
                 </h2>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={(e) => { hendalSubmit(e) }}>
                     {/* username Field */}
                     {!isSignInPage && <div>
                         <label
@@ -47,7 +73,7 @@ console.log()
                             placeholder="Enter your name"
                             required
                             value={data.username}
-                            onChange={(e)=>setdata({...data,username:e.target.value})}
+                            onChange={(e) => setdata({ ...data, username: e.target.value })}
                         />
                     </div>}
                     <div>
@@ -64,6 +90,8 @@ console.log()
                             placeholder="Enter your email"
                             required
                             value={data.email}
+                           
+                            onChange={(e) => setdata({ ...data, email: e.target.value })}
                         />
                     </div>
 
@@ -82,6 +110,7 @@ console.log()
                             placeholder="Enter your password"
                             required
                             value={data.password}
+                            onChange={(e) => setdata({ ...data, password: e.target.value })}
                         />
                     </div>
 
@@ -89,24 +118,24 @@ console.log()
                     <div>
                         <button
                             type="submit"
-                             className="w-full px-4 py-2 text-white bg-blue rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full px-4 py-2 text-white bg-blue rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >
-                            {isSignInPage ? 'Login' : 'sign in'}
+                            {isSignInPage ? 'sign_Up' : 'sign_in'}
                         </button>
                     </div>
                 </form>
 
                 {/* Footer */}
                 <div className="text-sm text-center text-gray-500">
-                     {isSignInPage?" Don't have an account ?":'Alrady have an account ? '}
-                     <span className='text-primary cursor-pointer underline' onClick={()=>{nevigate(`/users/${isSignInPage ? 'login ' : 'sign_in'}`)}}>{isSignInPage ? 'login' : 'sign_in'}</span>
-                    {/* <Link onClick={()={nevigate(isSignInPage ? '/users/signIn' : '/users/login')}} to={isSignInPage ? '/users/signIn' : '/users/login'} className="text-blue-500 hover:underline">
-                       {isSignInPage?'sign in' : 'login'}
+                    {isSignInPage ? " Don't have an account ?" : 'Alrady have an account ? '}
+                    <span className='text-primary cursor-pointer underline'  onClick={() => navigate(`/users/${isSignInPage ? 'sign_Up' : 'sign_in'}`)}>{isSignInPage ? 'sign_in' : 'sign_up'}</span>
+                    {/* <Link onClick={()={nevigate(isSignInPage ? '/users/signIn' : '/users/sign_Up')}} to={isSignInPage ? '/users/signIn' : '/users/sign_Up'} className="text-blue-500 hover:underline">
+                       {isSignInPage?'sign in' : 'sign_Up'}
                     </Link>  */}
                 </div>
-            </div> 
+            </div>
         </div>
-    )                   
+    )
 }
 
 //export area
