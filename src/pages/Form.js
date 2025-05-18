@@ -21,32 +21,32 @@ function Form(
     console.log()
     ///function definetion area
     const hendalSubmit = async (e) => {
+        console.log('sdraagsfga', data)
         e.preventDefault(); // Don't forget to prevent default form submission behavior
-        try {
-            const res = await fetch(`http://localhost:2000/api/register`, {
+        
+           const res = await fetch(`http://localhost:8000/api/${isSignInPage ? 'register' : 'login'}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
-    
-            const contentType = res.headers.get("content-type");
-    
-            let resData;
-            if (contentType && contentType.includes("application/json")) {
-                resData = await res.json();
-            } else {
-                resData = await res.text();
-            }
-    
-            console.log('data----', resData);
-    
-        } catch (err) {
-            console.error('Error:', err);
-        }
+            const resData = await res.json()
+            console.log('res --->>>>', resData)
+            // const contentType = res.headers.get("content-type");
+
+            // let resData;
+            // if (contentType && contentType.includes("application/json")) {
+            //     resData = await res.json();
+            // } else {
+            //     resData = await res.text();
+            // }
+
+            // console.log('data----', resData);
+
+        
     }
-    
+
 
     //return statment
     const navigate = useNavigate()
@@ -90,7 +90,7 @@ function Form(
                             placeholder="Enter your email"
                             required
                             value={data.email}
-                           
+
                             onChange={(e) => setdata({ ...data, email: e.target.value })}
                         />
                     </div>
@@ -127,8 +127,8 @@ function Form(
 
                 {/* Footer */}
                 <div className="text-sm text-center text-gray-500">
-                    {isSignInPage ? " Don't have an account ?" : 'Alrady have an account ? '}
-                    <span className='text-primary cursor-pointer underline'  onClick={() => navigate(`/users/${isSignInPage ? 'sign_in' : 'sign_up'}`)}>{isSignInPage ? 'sign_in' : 'sign_up'}</span>
+                    {isSignInPage ? " Don't have an account ? " : 'Alrady have an account ? '}
+                    <span className='text-primary cursor-pointer underline' onClick={() => navigate(`/users/${isSignInPage ? 'sign_in' : 'sign_up'}`)}>{isSignInPage ? 'sign_in' : 'sign_up'}</span>
                     {/* <Link onClick={()={nevigate(isSignInPage ? '/users/signIn' : '/users/sign_Up')}} to={isSignInPage ? '/users/signIn' : '/users/sign_Up'} className="text-blue-500 hover:underline">
                        {isSignInPage?'sign in' : 'sign_Up'}
                     </Link>  */}
