@@ -11,41 +11,35 @@ function Form(
 
     //hooks area
     const [data, setdata] = useState({
-        ...(isSignInPage && {
-            username: ''
-        }),
+        ...(isSignInPage ? {} : { fullName: '' }),
         email: '',
         password: ''
-    })
+    });
 
-    console.log()
-    ///function definetion area
-    const hendalSubmit = async (e) => {
-        console.log('sdraagsfga', data)
-        e.preventDefault(); // Don't forget to prevent default form submission behavior
-        
-           const res = await fetch(`http://localhost:8000/api/${isSignInPage ? 'register' : 'login'}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            const resData = await res.json()
-            console.log('res --->>>>', resData)
-            // const contentType = res.headers.get("content-type");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-            // let resData;
-            // if (contentType && contentType.includes("application/json")) {
-            //     resData = await res.json();
-            // } else {
-            //     resData = await res.text();
-            // }
+        const payload = isSignInPage
+        ? { email: data.email, password: data.password }
+        : { fullName: data.fullName, email: data.email, password: data.password };
+        try {
+          
+          const res = await fetch(`http://localhost:8000/api/${isSignInPage ? 'login' : 'register'}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+          
 
-            // console.log('data----', resData);
+            const resData = await res.json();
+            console.log('Response:', resData);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
-        
-    }
 
 
     //return statment
@@ -57,14 +51,14 @@ function Form(
                     {isSignInPage ? 'sign_Up to Your Account ' : 'Create to Your Account'}
 
                 </h2>
-                <form className="space-y-4" onSubmit={(e) => { hendalSubmit(e) }}>
-                    {/* username Field */}
+                <form className="space-y-4" onSubmit={(e) => { handleSubmit(e) }}>
+                    {/* fullName Field */}
                     {!isSignInPage && <div>
                         <label
                             htmlFor="name"
                             className="block text-sm font-medium text-gray-600"
                         >
-                            UserName
+                            fullName
                         </label>
                         <input
                             type="name"
@@ -72,8 +66,8 @@ function Form(
                             className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter your name"
                             required
-                            value={data.username}
-                            onChange={(e) => setdata({ ...data, username: e.target.value })}
+                            value={data.fullName}
+                            onChange={(e) => setdata({ ...data, fullName: e.target.value })}
                         />
                     </div>}
                     <div>
