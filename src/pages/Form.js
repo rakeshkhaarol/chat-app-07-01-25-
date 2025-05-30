@@ -1,6 +1,8 @@
 //import area
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2';
+
 
 //definetion area
 function Form(
@@ -16,29 +18,48 @@ function Form(
         password: ''
     });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-        const payload = isSignInPage
-        ? { email: data.email, password: data.password }
-        : { fullName: data.fullName, email: data.email, password: data.password };
-        try {
-          
-          const res = await fetch(`http://localhost:8000/api/${isSignInPage ? 'login' : 'register'}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-          
+  const payload = isSignInPage
+    ? { email: data.email, password: data.password }
+    : { fullName: data.fullName, email: data.email, password: data.password };
 
-            const resData = await res.json();
-            console.log('Response:', resData);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+  try {
+    const res = await fetch(`http://localhost:8000/api/${isSignInPage ? 'login' : 'register'}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const resData = await res.json();
+
+    if (res.ok) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: resData.message || (isSignInPage ? 'Logged in successfully!' : 'Registered successfully!'),
+      });
+      // Optional: Redirect after success
+      // navigate('/dashboard');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: resData.message || 'Something went wrong!',
+      });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Network Error',
+      text: 'Could not connect to server.',
+    });
+  }
+};
 
 
 
@@ -51,6 +72,7 @@ function Form(
                     {isSignInPage ? 'sign_Up to Your Account ' : 'Create to Your Account'}
 
                 </h2>
+                
                 <form className="space-y-4" onSubmit={(e) => { handleSubmit(e) }}>
                     {/* fullName Field */}
                     {!isSignInPage && <div>
