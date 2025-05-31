@@ -72,8 +72,8 @@ const handleSubmit = async (e) => {
     const navigate = useNavigate()
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-sm sm:max-w-md md:max-w-lg p-6 sm:p-8 space-y-6 bg-white rounded-lg shadow-lg" style={{ 'boxShadow': '0 0 10px 2px gray' }}>
-                <h2 className="text-xl sm:text-2xl font-bold text-center text-gray-800">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg" style={{ 'boxShadow': '0 0 10px 2px gray' }}>
+                <h2 className="text-2xl font-bold text-center text-gray-800">
                     {isSignInPage ? 'sign_Up to Your Account ' : 'Create to Your Account'}
 
                 </h2>
