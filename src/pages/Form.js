@@ -37,7 +37,7 @@ const handleSubmit = async (e) => {
     const resData = await res.json();
     if(resData.token){
         localStorage.setItem('user:token', resData.token);
-        localStorage.setItem('user:detail', resData.token)
+        localStorage.setItem('user:detail', JSON.stringify(resData.user))
         navigate('/')
     }
 
@@ -91,7 +91,7 @@ const handleSubmit = async (e) => {
                             type="name"
                             id="name"
                             className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your name"
+                            placeholder="Enter your fullName"
                             required
                             value={data.fullName}
                             onChange={(e) => setdata({ ...data, fullName: e.target.value })}
